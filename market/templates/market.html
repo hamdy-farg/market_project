@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+{% block title %}
+market
+{% endblock %}
+
+{% block content %}
+<h1> Market page</h1>
+
+<div class="row" style="margin-top: 20px;margin-left: 20px;">
+
+    <div class="col-8">
+
+        <h2> Available Item on the Market</h2>
+        <p> Click on one of the items to start buying</p>
+        <br>
+
+        <table class="table table-hover table table-dark">
+            <thead>
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">NAME</th>
+                    <th scope="col">BARCODE</th>
+                    <th scope="col">PRICE</th>
+                    <th scope="col">OPTIONS</th>
+                    <th scope="col">PURCHES</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in items: %}
+                {% include 'includes/items_modal.html' %}
+ 
+                <tr>
+                    <td>
+                        {{ item['id']}}
+                    </td>
+                    <td>
+                        {{ item['name']}}
+                    </td>
+                    <td>
+                        {{ item['bar_code']}}
+                    </td>
+                    <td>
+                        {{ item['price'] }}
+                    </td>
+                    <td>
+                        <button class="btn btn-outline btn-info" data-toggle="modal" data-target='#Modal-MoreInfo-{{ item.id}}'>
+                            More Info
+                        </button>
+                        <button class="btn btn-outline btn-success"data-toggle="modal"data-target="#Modal-PurchaseConfirm-{{ item.id }}">
+                            Purches This Item
+                        </button>
+                    </td>
+
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="col-4"><h2> Owned Items</h2>
+        <p> Click on cell item to put an item back on the market</p>
+        <br>
+        <div class="row">
+            {%for  owned_item in  owned_items: %}
+            {% include 'includes/owned_item_modal.html' %}
+                <div class="col-md-6">
+                    <div style="margin-bottom: 5px;" class="card text-center bg-dark">
+                        <div class="card-body">
+                            
+                            <h5 class="card-title">{{  owned_item.name }}</h5>
+                            <button class="btn btn-outline btn-danger" data-toggle="modal" data-target='#Modal_CellItem-{{  owned_item.id }}'>
+
+                            Sell this {{  owned_item.name}}
+                        </button >
+                        <p class="card-text"><strong>this item costs {{  owned_item.price }}</strong></p>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    </div>
+</div>
+
+
+
+{% endblock %}
